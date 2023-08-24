@@ -14,7 +14,10 @@ function getComputerChoice() {
     }
 }
 
-
+function badInput() {
+    alert("You MUST make a selection to proceed")
+    throw new Error("You MUST make a selection to proceed");
+}
 
 function printIt(a) {
     const para = document.createElement("p");
@@ -30,15 +33,20 @@ function playerSelection() {
     // Make sure the var playerSelection is NOT case-sensitive.
     // Need an if for null.
     let promptRaw = prompt("Pick one: Rock, Paper or Scissors", "Rock");
-    let promptSelect = promptRaw.charAt(0).toUpperCase() + promptRaw.slice(1);
 
-    if (promptSelect == "Rock") {
-        return "Rock";
-    } else if (promptSelect == "Paper") {
-        return "Paper";
-    } else if (promptSelect == "Scissors") {
-        return "Scissors";
-    } else alert("Bad input! Try again!")
+    if (promptRaw == null) {
+        alert("You MUST make a selection to proceed")
+        throw new Error("You MUST make a selection to proceed");
+        } else {
+        let promptSelect = promptRaw.charAt(0).toUpperCase() + promptRaw.slice(1);
+        if (promptSelect == "Rock") {
+            return "Rock";
+        } else if (promptSelect == "Paper") {
+            return "Paper";
+        } else if (promptSelect == "Scissors") {
+            return "Scissors";
+        } else alert("Bad input! Try again!");
+    }
 }
 
 
@@ -47,16 +55,16 @@ function playRound(a, b) {
     if (a == "Rock" && b == "Rock" || a == "Paper" && b == "Paper" || a == "Scissors" && b == "Scissors") {
         // alert(`Tie! You both chose ${a} ${b}.`);
         printIt(`Tie! You both chose ${a} ${b}.`);
-        // return "Tie! You both chose ${a}";
+        return "tie";
     } else if ((a == "Rock" && b == "Scissors") || (a == "Paper" && b == "Rock") || (a == "Scissors" && b == "Paper")) {
         // alert(`You win! ${a} beats ${b}!`);
         printIt(`You win! ${a} beats ${b}!`);
-        // return "Win! ${a} beats ${b}";
+        return "win";
     } else if ((b == "Rock" && a == "Scissors") || (b == "Paper" && a == "Rock") || (b == "Scissors" && a == "Paper")) {
         // alert(`You lose! ${b} beats ${a}.`);
         printIt(`You lose! ${b} beats ${a}.`);
-        // return "Loss! ${b} beats ${a}";
-    } else alert("SOMETHING WENT WRONG!!!!")
+        return "loss";
+    } else alert("SOMETHING WENT WRONG with playRound()!!!!")
 
 
     // return a string that declares the winner of the round
@@ -65,20 +73,56 @@ function playRound(a, b) {
 
 }
 
+let playerWins = 0;
+let compWins = 0;
+let totalTies = 0;
+let gameState = 0;
 
+function gamePlay() {
+    for (i = 0; gameState < 1; i++) {
+    let round = playRound(playerSelection(), getComputerChoice());
 
-
-
-
-/*
-
-function game() {
-    use playRound here to play rounds - first to 5 wins.
-    report the player as a winner or loser at the end.
+    if (round == "win") {
+        playerWins++;
+        console.log(`p (+1) = ${playerWins} and c = ${compWins} with ${totalTies} ties.`)
+        let gameState = checkWinner(playerWins, compWins);
+        console.log(gameState);
+    } else if(round == "loss") {
+        compWins++;
+        console.log(`p = ${playerWins} and c (+1) = ${compWins} with ${totalTies} ties.`)
+        let gameState = checkWinner(playerWins, compWins);
+        console.log(gameState);
+    } else if(round == "tie") {
+        totalTies++;
+        console.log(`p = ${playerWins} and c = ${compWins} with (+1) ${totalTies} ties.`)
+        let gameState = checkWinner(playerWins, compWins);
+        console.log(gameState);
+    } else alert("SOMETHING WENT WRONG with game()!!!!")
+    
+    // use playRound here to play rounds - first to 5 wins.
+    // report the player as a winner or loser at the end.
+    }
 }
 
+function checkWinner( a , b ) {
+    if ( a == 5 ) {
+        alert("WE HAVE A WINNER!!");
+        return 1;
+        // gameEnd();
+    } else if ( b == 5 ) {
+        alert("WE HAVE A LOSER!!");
+        return 1;
+        // gameEnd();
+    } else return 0;
+}
 
-
+/*
+function gameEnd() {
+    let keepGoing = prompt("Would you like to play another round?", "N")
+    if (keepGoing == "Y") {
+        gamePlay();
+    } else { alert ("Too Bad....");
+    }
+}
 */
-
 
