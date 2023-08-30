@@ -14,11 +14,6 @@ function getComputerChoice() {
     }
 }
 
-function badInput() {
-    alert("You MUST make a selection to proceed")
-    throw new Error("You MUST make a selection to proceed");
-}
-
 function printIt(a) {
     const para = document.createElement("p");
     numberId++;
@@ -54,15 +49,15 @@ function playRound(a, b) {
 
     if (a == "Rock" && b == "Rock" || a == "Paper" && b == "Paper" || a == "Scissors" && b == "Scissors") {
         // alert(`Tie! You both chose ${a} ${b}.`);
-        printIt(`Tie! You both chose ${a} ${b}.`);
+        // printIt(`Tie! You both chose ${a} ${b}.`);
         return "tie";
     } else if ((a == "Rock" && b == "Scissors") || (a == "Paper" && b == "Rock") || (a == "Scissors" && b == "Paper")) {
         // alert(`You win! ${a} beats ${b}!`);
-        printIt(`You win! ${a} beats ${b}!`);
+        // printIt(`You win! ${a} beats ${b}!`);
         return "win";
     } else if ((b == "Rock" && a == "Scissors") || (b == "Paper" && a == "Rock") || (b == "Scissors" && a == "Paper")) {
         // alert(`You lose! ${b} beats ${a}.`);
-        printIt(`You lose! ${b} beats ${a}.`);
+        // printIt(`You lose! ${b} beats ${a}.`);
         return "loss";
     } else alert("SOMETHING WENT WRONG with playRound()!!!!")
 
@@ -78,8 +73,27 @@ let compWins = 0;
 let totalTies = 0;
 let gameState = 0;
 
+
+
 function gamePlay() {
-    for (i = 0; gameState < 1; i++) {
+    printIt(playRound(playerSelection(), getComputerChoice()));
+    printIt(playRound(playerSelection(), getComputerChoice()));
+    printIt(playRound(playerSelection(), getComputerChoice()));
+    printIt(playRound(playerSelection(), getComputerChoice()));
+    printIt(playRound(playerSelection(), getComputerChoice()));
+}
+
+
+
+
+
+
+
+/*
+function gamePlay() {
+    console.log(gameState);
+    let i = 0;
+    for (gameState = 0; gameState < 1; i++) {
     let round = playRound(playerSelection(), getComputerChoice());
 
     if (round == "win") {
@@ -103,6 +117,9 @@ function gamePlay() {
     // report the player as a winner or loser at the end.
     }
 }
+*/
+
+
 
 function checkWinner( a , b ) {
     if ( a == 5 ) {
